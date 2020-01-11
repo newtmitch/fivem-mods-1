@@ -8,7 +8,31 @@ RegisterCommand(
   false
 );
 
+RegisterCommand(
+  "moto",
+  async (source, args) => {
+    const player = GetPlayerPed(-1);
+    const c = GetEntityCoords(player)
+    const car = GetHashKey("vindicator");
+    RequestModel(car);
+    const vehicle = CreateVehicle(car, c[0] + 2, c[1] + 2, c[2] + 1, false, true, false);
+    SetPedIntoVehicle(player, vehicle, -1)
+  },
+  false
+);
 
+RegisterCommand(
+  "jet",
+  async (source, args) => {
+    const player = GetPlayerPed(-1);
+    const c = GetEntityCoords(player)
+    const car = GetHashKey("lazer");
+    RequestModel(car);
+    const vehicle = CreateVehicle(car, c[0] + 2, c[1] + 2, c[2] + 1, false, true, false);
+    SetPedIntoVehicle(player, vehicle, -1)
+  },
+  false
+);
 
 
 RegisterCommand(
@@ -19,20 +43,20 @@ RegisterCommand(
     const car = GetHashKey("savage");
     RequestModel(car);
     const vehicle = CreateVehicle(car, c[0] + 2, c[1] + 2, c[2] + 1, false, true, false);
-    SetPedIntoVehicle(player, vehicle)
+    SetPedIntoVehicle(player, vehicle, -1)
   },
   false
 );
 
 RegisterCommand(
-  "adder",
+  "sports",
   async (source, args) => {
     const player = GetPlayerPed(-1);
     const c = GetEntityCoords(player)
-    const car = GetHashKey("adder");
+    const car = GetHashKey("fmj");
     RequestModel(car);
     const vehicle = CreateVehicle(car, c[0] + 2, c[1] + 2, c[2] + 1, false, true, false);
-    SetPedIntoVehicle(player, vehicle)
+    SetPedIntoVehicle(player, vehicle, -1)
   },
   false
 );
@@ -40,18 +64,13 @@ RegisterCommand(
 RegisterCommand(
   "car",
   async (source, args) => {
-    try {
-      const playerCoords = Cfx.Game.PlayerPed.Position;
-      const car = GetHashKey(args);
-      RequestModel(car);
-      const c = GetEntityCoords(GetPlayerPed(-1), false);
-      const vehicle = CreateVehicle(car, c[0] + 2, c[1] + 2, c[2] + 1, 0.0, true, false);
-      Cfx.Game.PlayerPed.setIntoVehicle(vehicle, Cfx.VehicleSeat.Driver);
-    } catch (ex) {
-      console.log("shit!");
-      console.log(ex.toString());
-      // console.log(ex.stack);
-    }
+    const player = GetPlayerPed(-1);
+    const c = GetEntityCoords(player)
+    const car = GetHashKey(args);
+    RequestModel(car);
+    const vehicle = CreateVehicle(car, c[0] + 2, c[1] + 2, c[2] + 1, false, true, false);
+    SetPedIntoVehicle(player, vehicle, -1);
+  SetVehicleWheelsCanBreak(vehicle, false);
   },
   false
 );
@@ -60,6 +79,10 @@ RegisterCommand(
   "guns",
   async (source, args) => {
     GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_smg" + args), 999, false, false);
+    GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_hominglauncher" + args), 999, false, false);
+    GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_heavysniper" + args), 999, false, false);
+    GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_sniperrifle" + args), 999, false, false);
+    
     GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_combatmg" + args), 999, false, false);
     GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_carbinerifle" + args), 999, false, false);
     GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_marksmanrifle" + args), 999, false, false);
@@ -88,8 +111,25 @@ RegisterCommand(
     GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_knife" + args), 999, false, false);
     GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("gadget_parachute" + args), 999, false, false);
     SetPedArmour(GetPlayerPed(-1), 999);
+  SetEntityHealth(GetPlayerPed(-1), 200);
   },
   false
+);
+
+RegisterCommand(
+'stars', async(source, args) => {
+console.log('STAR TIME');
+try {
+//  SetPlayerWantedLevel(GetPlayerPed(-1), 0, false);
+// SetPlayerWantedLevelNow(GetPlayerPed(-1));
+ClearPlayerWantedLevel(PlayerId());
+ SetPlayerWantedLevelNow(PlayerId(), false);
+} catch (ex) {
+
+  console.log("SHIT")
+console.log(ex)
+}
+}, false
 );
 
 RegisterCommand(
