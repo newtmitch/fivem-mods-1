@@ -121,6 +121,10 @@ RegisterCommand(
 				// rsm: temp debug
 				console.log(`player name: ${p.name}`);
 
+        const player = GetPlayerFromIndex(p);
+      console.log(player);
+
+
 			}
 
 			// const playerFromIndex = GetPlayerFromIndex()
