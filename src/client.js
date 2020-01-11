@@ -1,5 +1,3 @@
-import * as Cfx from "fivem-js";
-import { Vector3 } from "fivem-js";
 
 RegisterCommand(
   "loc",
@@ -10,16 +8,18 @@ RegisterCommand(
   false
 );
 
+
+
+
 RegisterCommand(
   "heli",
   async (source, args) => {
-    const playerCoords = Cfx.Game.PlayerPed.Position;
-    const vehicle = await Cfx.World.createVehicle(
-      new Cfx.Model("savage"),
-      playerCoords.add(new Vector3(8, 8, 1)),
-      4
-    );
-    Cfx.Game.PlayerPed.setIntoVehicle(vehicle, Cfx.VehicleSeat.Driver);
+    const player = GetPlayerPed(-1);
+    const c = GetEntityCoords(player)
+    const car = GetHashKey("savage");
+    RequestModel(car);
+    const vehicle = CreateVehicle(car, c[0] + 2, c[1] + 2, c[2] + 1, false, true, false);
+    SetPedIntoVehicle(player, vehicle)
   },
   false
 );
@@ -27,13 +27,12 @@ RegisterCommand(
 RegisterCommand(
   "adder",
   async (source, args) => {
-    const playerCoords = Cfx.Game.PlayerPed.Position;
-    const vehicle = await Cfx.World.createVehicle(
-      new Cfx.Model("adder"),
-      playerCoords.add(new Vector3(2, 2, 1)),
-      4
-    );
-    // Cfx.Game.PlayerPed.setIntoVehicle(vehicle, Cfx.VehicleSeat.Driver);
+    const player = GetPlayerPed(-1);
+    const c = GetEntityCoords(player)
+    const car = GetHashKey("adder");
+    RequestModel(car);
+    const vehicle = CreateVehicle(car, c[0] + 2, c[1] + 2, c[2] + 1, false, true, false);
+    SetPedIntoVehicle(player, vehicle)
   },
   false
 );
@@ -48,7 +47,6 @@ RegisterCommand(
       const c = GetEntityCoords(GetPlayerPed(-1), false);
       const vehicle = CreateVehicle(car, c[0] + 2, c[1] + 2, c[2] + 1, 0.0, true, false);
       Cfx.Game.PlayerPed.setIntoVehicle(vehicle, Cfx.VehicleSeat.Driver);
-      //	const vehicle = await Cfx.World.createVehicle(new Cfx.Model(args), playerCoords.add(new Vector3(2, 2, 1)), 4);
     } catch (ex) {
       console.log("shit!");
       console.log(ex.toString());
@@ -107,27 +105,24 @@ RegisterCommand(
   "tp",
   async (source, args) => {
     try {
-      console.log("source:");
-      console.log(source);
-      console.log("args: " + args);
+      // console.log("source:");
+      // console.log(source);
+      // console.log("args: " + args);
 
       const playerList = GetActivePlayers();
 
-      console.log("players:");
-			console.log(playerList);
-			
-			let idx;
-			for (let p in playerList) {
-				// rsm: temp debug
-				console.log(`player name: ${p.name}`);
+      // console.log("players:");
+      // console.log(playerList);
 
-        const player = GetPlayerFromIndex(p);
-      console.log(player);
+      const newCoords = GetEntityCoords(GetPlayerPed(-1))
 
+      let idx;
+      for (let p in playerList) {
+        const player = GetPlayerPed(p);
+        SetEntityCoords(player, newCoords[0], newCoords[1], newCoords[2], true, false, false, true)
+      }
 
-			}
-
-			// const playerFromIndex = GetPlayerFromIndex()
+      // const playerFromIndex = GetPlayerFromIndex()
 
 
 
@@ -163,17 +158,17 @@ RegisterCommand(
   false
 );
 
-RegisterCommand(
-  "active",
-  () => {
-    const players = GetActivePlayers();
-    console.log(players);
+// RegisterCommand(
+//   "active",
+//   () => {
+//     const players = GetActivePlayers();
+//     console.log(players);
 
-    for (let i in players) {
-      const player = GetPlayerFromIndex(i);
-      console.log("player:");
-      console.log(player);
-    }
-  },
-  false
-);
+//     for (let i in players) {
+//       const player = GetPlayerFromIndex(i);
+//       console.log("player:");
+//       console.log(player);
+//     }
+//   },
+//   false
+// );
