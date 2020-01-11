@@ -116,142 +116,7 @@ RegisterCommand(
 RegisterCommand(
   "guns",
   async (source, args) => {
-    GiveWeaponToPed(
-      GetPlayerPed(-1),
-      GetHashKey("weapon_smg" + args),
-      999,
-      false,
-      false
-    );
-    GiveWeaponToPed(
-      GetPlayerPed(-1),
-      GetHashKey("weapon_hominglauncher" + args),
-      999,
-      false,
-      false
-    );
-    GiveWeaponToPed(
-      GetPlayerPed(-1),
-      GetHashKey("weapon_heavysniper" + args),
-      999,
-      false,
-      false
-    );
-    GiveWeaponToPed(
-      GetPlayerPed(-1),
-      GetHashKey("weapon_sniperrifle" + args),
-      999,
-      false,
-      false
-    );
-
-    GiveWeaponToPed(
-      GetPlayerPed(-1),
-      GetHashKey("weapon_combatmg" + args),
-      999,
-      false,
-      false
-    );
-    GiveWeaponToPed(
-      GetPlayerPed(-1),
-      GetHashKey("weapon_carbinerifle" + args),
-      999,
-      false,
-      false
-    );
-    GiveWeaponToPed(
-      GetPlayerPed(-1),
-      GetHashKey("weapon_marksmanrifle" + args),
-      999,
-      false,
-      false
-    );
-    GiveWeaponToPed(
-      GetPlayerPed(-1),
-      GetHashKey("weapon_autoshotgun" + args),
-      999,
-      false,
-      false
-    );
-    GiveWeaponToPed(
-      GetPlayerPed(-1),
-      GetHashKey("weapon_assaultshotgun" + args),
-      999,
-      false,
-      false
-    );
-    GiveWeaponToPed(
-      GetPlayerPed(-1),
-      GetHashKey("weapon_rpg" + args),
-      999,
-      false,
-      false
-    );
-    GiveWeaponToPed(
-      GetPlayerPed(-1),
-      GetHashKey("weapon_grenadelauncher" + args),
-      999,
-      false,
-      false
-    );
-    GiveWeaponToPed(
-      GetPlayerPed(-1),
-      GetHashKey("weapon_stickybomb" + args),
-      999,
-      false,
-      false
-    );
-    GiveWeaponToPed(
-      GetPlayerPed(-1),
-      GetHashKey("weapon_molotov" + args),
-      999,
-      false,
-      false
-    );
-    GiveWeaponToPed(
-      GetPlayerPed(-1),
-      GetHashKey("weapon_heavypistol" + args),
-      999,
-      false,
-      false
-    );
-    GiveWeaponToPed(
-      GetPlayerPed(-1),
-      GetHashKey("weapon_revolver" + args),
-      999,
-      false,
-      false
-    );
-    GiveWeaponToPed(
-      GetPlayerPed(-1),
-      GetHashKey("weapon_machete" + args),
-      999,
-      false,
-      false
-    );
-    GiveWeaponToPed(
-      GetPlayerPed(-1),
-      GetHashKey("weapon_battleaxe" + args),
-      999,
-      false,
-      false
-    );
-    GiveWeaponToPed(
-      GetPlayerPed(-1),
-      GetHashKey("weapon_knife" + args),
-      999,
-      false,
-      false
-    );
-    GiveWeaponToPed(
-      GetPlayerPed(-1),
-      GetHashKey("gadget_parachute" + args),
-      999,
-      false,
-      false
-    );
-    SetPedArmour(GetPlayerPed(-1), 999);
-    SetEntityHealth(GetPlayerPed(-1), 200);
+    gearUp(GetPlayerPed(-1));
   },
   false
 );
@@ -276,8 +141,7 @@ RegisterCommand(
 RegisterCommand(
   "tpstart",
   async (source, args) => {
-    //location, -98.659, -1138.752, 0
-    SetEntityCoords(GetPlayerPed(-1), -85.547, -1153.953, 25.69, 1, 0, 0, 1);
+    tpStartingPoint(GetPlayerPed(-1));
   },
   false
 );
@@ -346,17 +210,87 @@ RegisterCommand(
   false
 );
 
-// RegisterCommand(
-//   "active",
-//   () => {
-//     const players = GetActivePlayers();
-//     console.log(players);
+RegisterCommand(
+  "resetall",
+  () => {
+    /*
+    for i = 0, 255 do
+    if NetworkIsPlayerActive(i) then
+        local ped = GetPlayerPed(i)
+        -- do stuff
+    end
+end
+*/
 
-//     for (let i in players) {
-//       const player = GetPlayerFromIndex(i);
-//       console.log("player:");
-//       console.log(player);
-//     }
-//   },
-//   false
-// );
+    const players = [];
+    for (i = 0; i < 10; i++) {
+      const ped = GetPlayerPed(i);
+      // rsm: temp debug
+      if (ped) {
+        // rsm: temp debug:
+        // console.log(`player: ${i}`);
+        // console.log(ped);
+
+        players.push(ped);
+      }
+    }
+
+    // rsm: temp debug
+    console.log(`players:`);
+    console.log(players);
+
+    for (const ped of players) {
+      // rsm: temp debug
+      // console.log(`messing with player:`);
+      // console.log(ped);
+
+      tpStartingPoint(ped);
+      gearUp(ped);
+      removeStars(ped);
+    }
+  },
+  false
+);
+
+function tpStartingPoint(ped) {
+  if (!ped) return;
+  SetEntityCoords(ped, -85.547, -1153.953, 25.69, 1, 0, 0, 1);
+}
+
+function gearUp(ped) {
+  GiveWeaponToPed(ped, GetHashKey("weapon_smg"), 999, false, false);
+  GiveWeaponToPed(ped, GetHashKey("weapon_hominglauncher"), 999, false, false);
+  GiveWeaponToPed(ped, GetHashKey("weapon_heavysniper"), 999, false, false);
+  GiveWeaponToPed(ped, GetHashKey("weapon_sniperrifle"), 999, false, false);
+
+  GiveWeaponToPed(ped, GetHashKey("weapon_combatmg"), 999, false, false);
+  GiveWeaponToPed(ped, GetHashKey("weapon_carbinerifle"), 999, false, false);
+  GiveWeaponToPed(ped, GetHashKey("weapon_marksmanrifle"), 999, false, false);
+  GiveWeaponToPed(ped, GetHashKey("weapon_autoshotgun"), 999, false, false);
+  GiveWeaponToPed(ped, GetHashKey("weapon_assaultshotgun"), 999, false, false);
+  GiveWeaponToPed(ped, GetHashKey("weapon_rpg"), 999, false, false);
+  GiveWeaponToPed(ped, GetHashKey("weapon_grenadelauncher"), 999, false, false);
+  GiveWeaponToPed(ped, GetHashKey("weapon_stickybomb"), 999, false, false);
+  GiveWeaponToPed(ped, GetHashKey("weapon_molotov"), 999, false, false);
+  GiveWeaponToPed(ped, GetHashKey("weapon_heavypistol"), 999, false, false);
+  GiveWeaponToPed(ped, GetHashKey("weapon_revolver"), 999, false, false);
+  GiveWeaponToPed(ped, GetHashKey("weapon_machete"), 999, false, false);
+  GiveWeaponToPed(ped, GetHashKey("weapon_battleaxe"), 999, false, false);
+  GiveWeaponToPed(ped, GetHashKey("weapon_knife"), 999, false, false);
+  GiveWeaponToPed(ped, GetHashKey("gadget_parachute"), 999, false, false);
+  SetPedArmour(ped, 999);
+  SetEntityHealth(ped, 200);
+}
+
+function removeStars(ped) {
+  console.log("STAR TIME");
+  try {
+    //  SetPlayerWantedLevel(GetPlayerPed(-1), 0, false);
+    // SetPlayerWantedLevelNow(GetPlayerPed(-1));
+    ClearPlayerWantedLevel(ped);
+    SetPlayerWantedLevelNow(ped, false);
+  } catch (ex) {
+    console.log("SHIT");
+    console.log(ex);
+  }
+}
