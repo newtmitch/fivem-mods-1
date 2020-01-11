@@ -84,9 +84,26 @@ console.log('shit!');
 RegisterCommand(
 	'guns',
 	async(source, args) => {
-		GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_" + args), 999, false, false);
+		GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_smg" + args), 999, false, false);
+		GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_combatmg" + args), 999, false, false);
+		GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_carbinerifle" + args), 999, false, false);
+		GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_marksmanrifle" + args), 999, false, false);
+		GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_autoshotgun" + args), 999, false, false);
+		GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_assaultshotgun" + args), 999, false, false);
+		GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_rpg" + args), 999, false, false);
+		GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_grenadelauncher" + args), 999, false, false);
+		GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_stickybomb" + args), 999, false, false);
+		GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_molotov" + args), 999, false, false);
+		GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_heavypistol" + args), 999, false, false);
+		GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_revolver" + args), 999, false, false);
+		GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_machete" + args), 999, false, false);
+		GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_battleaxe" + args), 999, false, false);
+		GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("weapon_knife" + args), 999, false, false);
+		GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("gadget_parachute" + args), 999, false, false);
+		SetPedArmour(GetPlayerPed(-1), 999);
 	}, false
 );
+
 
 RegisterCommand(
 	'tp',
@@ -95,12 +112,17 @@ RegisterCommand(
 
 			console.log('source:');
 			console.log(source);
+			console.log('args: ' + args);
+
+const playerList = GetActivePlayers();
+
+console.log('players:');
+console.log(playerList);
 
 		const coords = GetEntityCoords(GetPlayerPed(-1), false);
 			console.log('old coords:');
 			console.log(coords);
 
-			console.log('args: ' + args);
 
 			const ped = GetPlayerPed(args);
 
