@@ -2,6 +2,13 @@ import * as Cfx from "fivem-js";
 import { Vector3 } from "fivem-js";
 
 RegisterCommand(
+  "loc",
+async (source, args) => {
+  const coords = GetEntityCoords(GetPlayerPed(-1), false);
+    emit("chatMessage", "", [0, 255, 0], coords);
+}, false);
+
+RegisterCommand(
   "heli",
   async (source, args) => {
     const playerCoords = Cfx.Game.PlayerPed.Position;
@@ -89,7 +96,7 @@ RegisterCommand(
 	"tpstart",
 	async (source, args) => {
 		//location, -98.659, -1138.752, 0
-		SetEntityCoords(GetPlayerPed(-1), -98.659, -1138.752, 0, 1, 0, 0, 1);
+		SetEntityCoords(GetPlayerPed(-1), -85.547, -1153.953, 25.69, 1, 0, 0, 1);
 
 	}, false
 )
