@@ -3,10 +3,12 @@ import { Vector3 } from "fivem-js";
 
 RegisterCommand(
   "loc",
-async (source, args) => {
-  const coords = GetEntityCoords(GetPlayerPed(-1), false);
+  async (source, args) => {
+    const coords = GetEntityCoords(GetPlayerPed(-1), false);
     emit("chatMessage", "", [0, 255, 0], coords);
-}, false);
+  },
+  false
+);
 
 RegisterCommand(
   "heli",
@@ -93,13 +95,13 @@ RegisterCommand(
 );
 
 RegisterCommand(
-	"tpstart",
-	async (source, args) => {
-		//location, -98.659, -1138.752, 0
-		SetEntityCoords(GetPlayerPed(-1), -85.547, -1153.953, 25.69, 1, 0, 0, 1);
-
-	}, false
-)
+  "tpstart",
+  async (source, args) => {
+    //location, -98.659, -1138.752, 0
+    SetEntityCoords(GetPlayerPed(-1), -85.547, -1153.953, 25.69, 1, 0, 0, 1);
+  },
+  false
+);
 
 RegisterCommand(
   "tp",
@@ -112,23 +114,34 @@ RegisterCommand(
       const playerList = GetActivePlayers();
 
       console.log("players:");
-      console.log(playerList);
+			console.log(playerList);
+			
+			let idx;
+			for (let p in playerList) {
+				// rsm: temp debug
+				console.log(`player name: ${p.name}`);
 
-      const coords = GetEntityCoords(GetPlayerPed(-1), false);
-      console.log("old coords:");
-      console.log(coords);
+			}
 
-      const ped = GetPlayerPed(args);
+			// const playerFromIndex = GetPlayerFromIndex()
 
-      console.log("ped:");
-      console.log(ped);
 
-      const c = GetEntityCoords(GetPlayerPed(args), false);
 
-      console.log("new coords:");
-      console.log(c);
-      // SetEntityCoords(GetPlayerPed(-1), c[0], c[1], c[2], 1, 0, 0, 1);
-      SetEntityCoords(GetPlayerPed(-1), 400, 400, 400, 1, 0, 0, 1);
+      // const coords = GetEntityCoords(GetPlayerPed(-1), false);
+      // console.log("old coords:");
+      // console.log(coords);
+
+      // const ped = GetPlayerPed(args);
+
+      // console.log("ped:");
+      // console.log(ped);
+
+      // const c = GetEntityCoords(GetPlayerPed(args), false);
+
+      // console.log("new coords:");
+      // console.log(c);
+      // // SetEntityCoords(GetPlayerPed(-1), c[0], c[1], c[2], 1, 0, 0, 1);
+      // SetEntityCoords(GetPlayerPed(-1), 400, 400, 400, 1, 0, 0, 1);
     } catch (ex) {
       console.log("SHIT");
       console.log(ex.toString());
