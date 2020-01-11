@@ -86,6 +86,15 @@ RegisterCommand(
 );
 
 RegisterCommand(
+	"tpstart",
+	async (source, args) => {
+		//location, -98.659, -1138.752, 0
+		SetEntityCoords(GetPlayerPed(-1), -98.659, -1138.752, 0, 1, 0, 0, 1);
+
+	}, false
+)
+
+RegisterCommand(
   "tp",
   async (source, args) => {
     try {
