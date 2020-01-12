@@ -213,15 +213,7 @@ RegisterCommand(
 RegisterCommand(
   "resetall",
   () => {
-    /*
-    for i = 0, 255 do
-    if NetworkIsPlayerActive(i) then
-        local ped = GetPlayerPed(i)
-        -- do stuff
-    end
-end
-*/
-
+    // GetActivePlayers doesn't work, so we do this
     const players = [];
     for (i = 0; i < 10; i++) {
       const ped = GetPlayerPed(i);
@@ -251,6 +243,37 @@ end
   },
   false
 );
+
+RegisterCommand(
+  "reset",
+  () => {
+    const ped = GetPlayerPed(-1);
+    tpStartingPoint(ped);
+    gearUp(ped);
+    removeStars(ped);
+  },
+  false
+);
+
+RegisterCommand(
+  "fixcar",
+  () => {
+    const vehicle = GetVehiclePedIsIn(GetPlayerPed(-1), false);
+    if (vehicle) {
+      SetVehicleUndriveable(vehicle, false);
+      SetVehicleFixed(vehicle);
+      healthBodyLast = 1000.0;
+      healthEngineLast = 1000.0;
+      healthPetrolTankLast = 1000.0;
+      SetVehicleEngineOn(vehicle, true, false);
+    }
+  },
+  false
+);
+
+//
+// REUSABLE
+//
 
 function tpStartingPoint(ped) {
   if (!ped) return;
